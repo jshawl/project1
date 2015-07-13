@@ -9,8 +9,8 @@ BlackJack.prototype = {
 
   reset: function() {
     this.deck = this.newDeck();
-    this.pHand = {val:0, soft: 0};
-    this.dHand = {val:0, soft: 0};
+    this.pHand = {val:0, soft: 0, cards: 0};
+    this.dHand = {val:0, soft: 0, cards: 0};
   },
 
   newDeck: function() {
@@ -24,10 +24,22 @@ BlackJack.prototype = {
     return deck;
   },
 
-  deal: function(hand) {
+  drawCard: function(player) {
     var card = this.deck.pop();
-
+    var val = this.cardValue(card);
+    player.val += val;
+    if (val === 11){player.soft++;}
+    player.cards++;
+    return card;
+  },
+  
+  cardValue: function(card){
+    var val = Math.floor(card / 4) + 1;
+    if (val == 1){val = 11;}
+    else if (val > 10){val = 10;}
+    return val;
   }
+
 }
 var deck = [];
 var hand = [];
@@ -85,12 +97,6 @@ function drawCard(card){
 }
 
 //Get point value of card -- could use tidying
-function cardValue(card){
-  var val = Math.floor(card / 4) + 1;
-  if (val == 1){val = 11;}
-  else if (val > 10){val = 10;}
-  return val;
-}
 function stringCard(string){    //doesn't catch a card value out of range
   var num = string.slice(0, string.length - 1).toUpperCase();
   console.log(num);
