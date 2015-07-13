@@ -14,6 +14,12 @@ function deal(){
   var value = cardValue(card);
   hand.push(card);
   handVals.push(value);
+  drawCard(card);
+}
+function drawCard(card){
+  $(".hand").append($("<div>" + cardString(card) + "</div>")
+                      .addClass("card")
+             );
 }
 
 function cardValue(card){
@@ -33,4 +39,4 @@ function cardString(card){
   else if (number == 12) {number = "Q";}
   else {number = "K";}
   return number + suits[suit];
-  }
+}
