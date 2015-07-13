@@ -1,0 +1,28 @@
+*{
+  box-sizing: border-box;
+}
+
+.table{
+  background: #095;
+  padding: 4em;
+  border: 2px solid black
+}
+.deck{
+  background: #00f;
+  display: inline-block;
+  border: black solid 1px;
+  border-radius: 15%;
+  padding: 2em .5em;
+  margin: 1em;
+}
+.hand{
+  border: black dashed 2px;
+}
+.card{
+  display: inline-block;
+  background: #fff;
+  border: black solid 1px;
+  border-radius: 15%;
+  padding: 2em 1em;
+
+}
