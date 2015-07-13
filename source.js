@@ -1,14 +1,40 @@
+function BlackJack(){
+  this.reset();
+}
+
+BlackJack.prototype = {
+  deck: [],
+  pHand: {},
+  dHand: {},
+
+  reset: function() {
+    this.deck = this.newDeck();
+    this.pHand = {val:0, soft: 0};
+    this.dHand = {val:0, soft: 0};
+  },
+
+  newDeck: function() {
+    //Fisher-Yates inside out shuffle
+    var deck = [];
+    for (var i = 0; i < 52; i++){
+      var j = Math.floor(Math.random() * i);
+      if (j != i){deck[i] = deck[j];}
+      deck[j] = i;
+    }
+    return deck;
+  },
+
+  deal: function(hand) {
+    var card = this.deck.pop();
+
+  }
+}
 var deck = [];
 var hand = [];
 var handVals = [];
 var dealing = true;
 
-//Fisher-Yates inside out shuffle
-for (var i = 0; i < 52; i++){
-  var j = Math.floor(Math.random() * i);
-  if (j != i){deck[i] = deck[j];}
-  deck[j] = i;
-}
+
 
 $(".deck").on("click", deal);
 $(".hold").on("click", function(){
