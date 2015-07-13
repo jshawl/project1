@@ -7,13 +7,22 @@
   padding: 4em;
   border: 2px solid black
 }
+.button{
+  display: inline-block;
+  border: solid black 1px;
+}
+.hold{
+  background: #f00;
+}
 .deck{
   background: #00f;
-  display: inline-block;
-  border: black solid 1px;
   border-radius: 15%;
   padding: 2em .5em;
   margin: 1em;
+}
+.restart{
+  background: #000;
+  color: #fff;
 }
 .hand{
   border: black dashed 2px;

@@ -1,6 +1,7 @@
 var deck = [];
 var hand = [];
 var handVals = [];
+var dealing = true;
 
 //Fisher-Yates inside out shuffle
 for (var i = 0; i < 52; i++){
@@ -9,13 +10,24 @@ for (var i = 0; i < 52; i++){
   deck[j] = i;
 }
 
+$(".deck").on("click", deal);
+$(".hold").on("click", function(){
+  window.alert("You hold with " + handVals.reduce(function(a, b){return a + b;}));
+  dealing = false;
+});
+$(".restart").on("click", function(){
+  document.location.reload();
+});
+
 function deal(card){
-  var card = (card >= 0 ? card : deck.pop());
-  var value = cardValue(card);
-  hand.push(card);
-  handVals.push(value);
-  drawCard(card);
-  checkEnd();
+  if (dealing){
+    var card = (card >= 0 ? card : deck.pop());
+    var value = cardValue(card);
+    hand.push(card);
+    handVals.push(value);
+    drawCard(card);
+    checkEnd();
+  }
 }
 function checkEnd(){
   var points = handVals.reduce(function(a, b){return a + b;});
@@ -26,11 +38,13 @@ function checkEnd(){
       handVals[aceAt] = 1;
       return checkEnd();
     }
-    console.log("Bust!");
+    window.alert("Bust!");
+    dealing = false;
   }
   else if (points == 21) {
-    if (checkBlackJack()){console.log("Black Jack!");}
-    else console.log("21!");
+    if (checkBlackJack()){window.alert("Black Jack!");}
+    else window.alert("21!");
+    dealing = false;
   }
 }
 
