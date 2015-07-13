@@ -33,7 +33,13 @@
       </div>
     </main>
     <footer>jsm</footer>
-  </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-  <script src="source.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+
+  <script>
+    var model = new BlackJack();
+    var game = new BlackJackView(model);
+  </script>
+  </body>
 </html>
