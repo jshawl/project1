@@ -6,13 +6,14 @@ BlackJack.prototype = {
   deck: [],
   pHand: {},
   dHand: {},
-  active: false,
+  bank: 100,
+  pot: 0,
 
   reset: function() {
     this.deck = this.newDeck();
     this.pHand = {val:0, soft: 0, cards: 0};
     this.dHand = {val:0, soft: 0, cards: 0};
-    this.active = true;
+    this.pot = 0;
   },
 
   newDeck: function() {
@@ -24,6 +25,34 @@ BlackJack.prototype = {
       deck[j] = i;
     }
     return deck;
+  },
+  bet: function(){
+    if (10 > this.bank){
+      console.log("bet exceeds bank")
+      return false;
+    }
+    this.pot += 20;
+    this.bank -= 10;
+  },
+
+  settle: function(){
+    var pScore = this.pHand.val;
+    var dScore = this.dHand.val;
+    if (pScore === dScore){
+      this.bank += (this.pot / 2);
+      this.pot = 0;
+      return "Push";
+    }
+    if (pScore <= 21 && pScore > dScore || dScore > 21){
+      var payout = this.pot
+      this.bank += this.pot;
+      this.pot = 0;
+      return ("You win with "+ pScore +"! Payout: $" + payout)
+    }
+    if (pScore < dScore || pScore > 21){
+      this.pot = 0;
+      return ("Dealer wins!");
+    }
   },
 
   drawCard: function(player) {

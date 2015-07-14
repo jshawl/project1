@@ -6,9 +6,8 @@ function BlackJackView(model){
 BlackJackView.prototype = {
   listen: function(){
     $(".deck").on("click", this.deal.bind(this));
-    //$(".hold").
+    $(".bet").on("click", this.placeBet.bind(this)); //Want to be able to pass and argument here
   },
-
   deal: function(){
     this.dealCard(this.model.pHand);
     this.dealCard(this.model.dHand);
@@ -21,17 +20,21 @@ BlackJackView.prototype = {
   hit: function(){
     this.dealCard(this.model.pHand);
     if (this.model.checkBust(this.model.pHand)){
-      window.alert("Bust!");
+      $(".textOut").text("Bust!");
       $(".deck").off();
       this.dealerPlay();
     }
   },
   dealerPlay: function(){
     $(".deck").off();
+    var text = $(".textOut").text() + " [" + this.model.pHand.val + "]";
+    $(".textOut").text(text);
     $(".hide").removeClass("hide");
     while(this.model.dHand.val < 17){
       this.dealCard(this.model.dHand);
     }
+    var result = this.model.settle();
+    $(".textOut").text(result);
 
   },
   dealCard: function(to, hide){
