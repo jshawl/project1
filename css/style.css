@@ -30,8 +30,13 @@
 .card{
   display: inline-block;
   background: #fff;
+  border-radius: 25%;
   border: black solid 1px;
-  border-radius: 15%;
-  padding: 2em 1em;
-
+  height: 100px;
+  width: 75px;
+  font-size: 35px;
+  .padding: 1em;
+}
+.hide {
+  color: white;
 }

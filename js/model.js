@@ -6,11 +6,13 @@ BlackJack.prototype = {
   deck: [],
   pHand: {},
   dHand: {},
+  active: false,
 
   reset: function() {
     this.deck = this.newDeck();
     this.pHand = {val:0, soft: 0, cards: 0};
     this.dHand = {val:0, soft: 0, cards: 0};
+    this.active = true;
   },
 
   newDeck: function() {
@@ -38,6 +40,17 @@ BlackJack.prototype = {
     if (val == 1){val = 11;}
     else if (val > 10){val = 10;}
     return val;
+  },
+  checkBust: function(player){
+    if (player.val > 21){
+      if(player.soft > 0){
+        player.val -= 10;
+        player.soft--;
+        return this.checkBust(player);
+      }
+      else{return true;}
+    }
+    else{return false;}
   }
 
 }
