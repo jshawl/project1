@@ -21,12 +21,14 @@
 }
 .textOut{
   text-align: center;
+  display: block;
 }
 .pot{
   text-align: center;
+  display: block;
 }
 
-.deck, .restart, .hold{
+.deck, .hold{
   height: 100px;
   width: 100px;
   border: blue solid;
@@ -45,11 +47,7 @@
   background: yellow;
   border: red dashed 8px;
 }
-.restart{
-  background: red;
-  border: white dashed 8px;
-  color: #fff;
-}
+
 .bet{
   display: inline-block;
 }

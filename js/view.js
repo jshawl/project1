@@ -6,16 +6,8 @@ function BlackJackView(model){
 BlackJackView.prototype = {
   init: function(){
     this.update();
-    //UI Elements
-    this.uiDeck = $(".deck");
-    this.uiHold = $(".hold");
-    this.uiRestart = $(".restart");
-    this.uiBet = $(".bet");
-    this.uiTextOut = $(".textOut");
-    //Initial listeners
-
-
   },
+
   update: function(){
     console.log("updating...");
     $(".pot span").text(this.model.pot);
@@ -24,13 +16,12 @@ BlackJackView.prototype = {
     $(".deck").off();
     $(".hold").off();
     $(".bet").off();
-    $(".restart").off();
     if (this.model.deal){
       $(".deck").on("click", this.deal.bind(this));
     }
     if (this.model.playerTurn){
+      $(".deck").text("Hit")
       $(".deck").on("click", this.hit.bind(this));
-      console.log("binding hold");
       $(".hold").on("click", this.dealerPlay.bind(this));
     }
     if (this.model.betting){
@@ -42,7 +33,8 @@ BlackJackView.prototype = {
     }
     if (this.model.handOver){
       console.log("binding restart");
-      $(".restart").on("click", this.restart.bind(this));
+      $(".deck").text("New Hand")
+      $(".deck").on("click", this.restart.bind(this));
     }
   },
   restart: function(){
@@ -58,9 +50,8 @@ BlackJackView.prototype = {
     this.model.bet(amount);
     console.log(this.model.pot);
     this.update();
-     //Am I making a bunch of listeners here?
-    //update pot and bank
   },
+
   deal: function(){
     this.model.betting = false;
     this.model.deal = false;
@@ -76,7 +67,7 @@ BlackJackView.prototype = {
     this.dealCard(this.model.pHand);
     if (this.model.checkBust(this.model.pHand)){
       console.log("bust");
-      this.model.playerTurn = false; //[p]redundant?
+      this.model.playerTurn = false;
       this.update();
       this.model.settle();
     }
