@@ -1,7 +1,6 @@
 *{
   box-sizing: border-box;
   font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 18px;
 }
 body{
   background: red;
@@ -42,6 +41,8 @@ h3{
 .pot{
   text-align: center;
   display: block;
+  font-size: 30px;
+  margin: 10px 0;
 }
 
 .deck, .hold{
@@ -84,8 +85,10 @@ button {
   border: black solid 1px;
   height: 100px;
   width: 75px;
-  font-size: 35px;
   padding: 10px 0 0 10px;
+}
+.card *{
+  font-size: 35px;
 
 }
 .red{
