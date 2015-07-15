@@ -23,7 +23,7 @@ BlackJack.prototype = {
     this.betting = true;
     this.deal = false;
     this.handOver = false;
-    this.textOut = "Place a bet!";
+    this.textOut = "Place a bet to start!";
     console.log(this);
   },
 

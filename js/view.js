@@ -17,6 +17,7 @@ BlackJackView.prototype = {
     $(".hold").off();
     $(".bet").off();
     if (this.model.deal){
+      $(".deck").text("Deal")
       $(".deck").on("click", this.deal.bind(this));
     }
     if (this.model.playerTurn){
@@ -25,11 +26,11 @@ BlackJackView.prototype = {
       $(".hold").on("click", this.dealerPlay.bind(this));
     }
     if (this.model.betting){
-      $(".bet").show();
+      $(".bet *").show();
       $(".bet").on("click", this.placeBet.bind(this));
     }
     else{
-      $(".bet").hide();
+      $(".bet *").hide();
     }
     if (this.model.handOver){
       console.log("binding restart");
@@ -68,8 +69,8 @@ BlackJackView.prototype = {
     if (this.model.checkBust(this.model.pHand)){
       console.log("bust");
       this.model.playerTurn = false;
-      this.update();
       this.model.settle();
+      this.update();
     }
   },
   dealerPlay: function(){
@@ -88,9 +89,11 @@ BlackJackView.prototype = {
     this.printCard(card, hand, hide);
   },
   printCard: function(card, hand, hide){
+    var red = false;
+    if(card.indexOf("hearts") > 0 || card.indexOf("diams") > 0){red = true;}
     var holder = $("<div></div>");
     holder.append($("<div>" + card + "</div>").addClass(hide?"hide":""));
-    holder.addClass("card");
+    holder.addClass("card").addClass(red?"red":"black");
     $(hand +" .hand").append(holder);
   },
 
