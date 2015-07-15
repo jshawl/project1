@@ -7,39 +7,55 @@
   padding: 4em;
   border: 2px solid black
 }
+.hand{
+  height: 180px;
+}
 .console{
   display: flex;
 }
+.console *{
+  display: inline-block;
+}
+.bet *{
+  display: block;
+}
 .textOut{
-  padding: 4em;
+  text-align: center;
+}
+.pot{
+  text-align: center;
 }
 
-.hold{
-  display: inline-block;
-  background: #f00;
-  height: 50px;
-  width: 50px;
-  margin: 3em;
+.deck, .restart, .hold{
+  height: 100px;
+  width: 100px;
+  border: blue solid;
   border-radius: 50%;
+  display: inline-block;
+  margin: 0 20px;
+  padding: 33px 0px;
   text-align: center;
 }
 .deck{
-  display: inline-block;
-  background: #00f;
-  border-radius: 15%;
-  padding: 2em .5em;
-  margin: 1em;
+  background: blue;
+  border: yellow dashed 8px;
+  color: yellow;
+}
+.hold{
+  background: yellow;
+  border: red dashed 8px;
 }
 .restart{
-  display: inline-block;
-  background: #000;
+  background: red;
+  border: white dashed 8px;
   color: #fff;
 }
 .bet{
   display: inline-block;
 }
-.hand{
-  border: black dashed 2px;
+button {
+  display: block;
+  margin: 5px;
 }
 .card{
   display: inline-block;
@@ -51,6 +67,6 @@
   font-size: 35px;
   .padding: 1em;
 }
-.hide {
+.hide{
   color: white;
 }

@@ -1,41 +1,95 @@
 function BlackJackView(model){
   this.model = model;
-  this.listen();
+  this.init();
 }
 
 BlackJackView.prototype = {
-  listen: function(){
-    $(".deck").on("click", this.deal.bind(this));
-    $(".bet").on("click", this.placeBet.bind(this)); //Want to be able to pass and argument here
+  init: function(){
+    this.update();
+    //UI Elements
+    this.uiDeck = $(".deck");
+    this.uiHold = $(".hold");
+    this.uiRestart = $(".restart");
+    this.uiBet = $(".bet");
+    this.uiTextOut = $(".textOut");
+    //Initial listeners
+
+
+  },
+  update: function(){
+    console.log("updating...");
+    $(".pot span").text(this.model.pot);
+    $(".bank span").text(this.model.bank);
+    $(".textOut").text(this.model.textOut);
+    $(".deck").off();
+    $(".hold").off();
+    $(".bet").off();
+    $(".restart").off();
+    if (this.model.deal){
+      $(".deck").on("click", this.deal.bind(this));
+    }
+    if (this.model.playerTurn){
+      $(".deck").on("click", this.hit.bind(this));
+      console.log("binding hold");
+      $(".hold").on("click", this.dealerPlay.bind(this));
+    }
+    if (this.model.betting){
+      $(".bet").show();
+      $(".bet").on("click", this.placeBet.bind(this));
+    }
+    else{
+      $(".bet").hide();
+    }
+    if (this.model.handOver){
+      console.log("binding restart");
+      $(".restart").on("click", this.restart.bind(this));
+    }
+  },
+  restart: function(){
+    this.model.reset();
+    this.update();
+    $(".hand").empty();
+
+  },
+  placeBet: function(e){
+    this.model.textOut = ""
+    this.model.deal = true;
+    var amount = $(e.target).attr("name").substring(1);
+    this.model.bet(amount);
+    console.log(this.model.pot);
+    this.update();
+     //Am I making a bunch of listeners here?
+    //update pot and bank
   },
   deal: function(){
+    this.model.betting = false;
+    this.model.deal = false;
+    this.update();
     this.dealCard(this.model.pHand);
     this.dealCard(this.model.dHand);
     this.dealCard(this.model.pHand);
     this.dealCard(this.model.dHand, true)
-    $(".deck").text("Hit").off();
-    $(".deck").on("click", this.hit.bind(this))
-    $(".hold").on("click", this.dealerPlay.bind(this))
+    this.model.playerTurn = true;
+    this.update();
   },
   hit: function(){
     this.dealCard(this.model.pHand);
     if (this.model.checkBust(this.model.pHand)){
-      $(".textOut").text("Bust!");
-      $(".deck").off();
-      this.dealerPlay();
+      console.log("bust");
+      this.model.playerTurn = false; //[p]redundant?
+      this.update();
+      this.model.settle();
     }
   },
   dealerPlay: function(){
-    $(".deck").off();
-    var text = $(".textOut").text() + " [" + this.model.pHand.val + "]";
-    $(".textOut").text(text);
-    $(".hide").removeClass("hide");
+    this.model.playerTurn = false;
+    $(".dealer .hide").css("color", "black")
+    this.update();
     while(this.model.dHand.val < 17){
       this.dealCard(this.model.dHand);
     }
-    var result = this.model.settle();
-    $(".textOut").text(result);
-
+    this.model.settle();    // update bank and pot
+    this.update();
   },
   dealCard: function(to, hide){
     var card = this.cardString(this.model.drawCard(to));
@@ -46,8 +100,7 @@ BlackJackView.prototype = {
     var holder = $("<div></div>");
     holder.append($("<div>" + card + "</div>").addClass(hide?"hide":""));
     holder.addClass("card");
-    console.log(holder);
-    $(hand).append(holder);
+    $(hand +" .hand").append(holder);
   },
 
   cardString: function(card){

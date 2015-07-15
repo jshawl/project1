@@ -8,12 +8,23 @@ BlackJack.prototype = {
   dHand: {},
   bank: 100,
   pot: 0,
+  betting: true,
+  deal: false,
+  playerTurn: false,
+  handOver:false,
+  textOut: "",
 
   reset: function() {
     this.deck = this.newDeck();
     this.pHand = {val:0, soft: 0, cards: 0};
     this.dHand = {val:0, soft: 0, cards: 0};
     this.pot = 0;
+    this.playerTurn = false;
+    this.betting = true;
+    this.deal = false;
+    this.handOver = false;
+    this.textOut = "Place a bet!";
+    console.log(this);
   },
 
   newDeck: function() {
@@ -26,32 +37,44 @@ BlackJack.prototype = {
     }
     return deck;
   },
-  bet: function(){
-    if (10 > this.bank){
-      console.log("bet exceeds bank")
+  bet: function(amount){
+    if (amount > this.bank){
+      console.log("bet exceeds bank") //temporary alert
       return false;
     }
-    this.pot += 20;
-    this.bank -= 10;
+    this.pot += amount * 2;
+    this.bank -= amount;
   },
 
   settle: function(){
-    var pScore = this.pHand.val;
-    var dScore = this.dHand.val;
-    if (pScore === dScore){
-      this.bank += (this.pot / 2);
-      this.pot = 0;
-      return "Push";
+    this.handOver = true; //maybe farther down
+
+    // var pScore = this.pHand.val;
+    // var dScore = this.dHand.val;
+    if(this.checkBust(this.pHand)){
+      this.textOut = "Dealer wins!";
+      return;
     }
-    if (pScore <= 21 && pScore > dScore || dScore > 21){
+    if(this.checkBust(this.dHand)){
+      var payout = this.pot;
+      this.bank += this.pot;
+      this.textOut = ("Dealer busts! You win with "+ this.pHand.val +"! Payout: $" + payout);
+      return;
+    }
+    if(this.pHand.val > this.dHand.val){
       var payout = this.pot
       this.bank += this.pot;
-      this.pot = 0;
-      return ("You win with "+ pScore +"! Payout: $" + payout)
+      this.textOut = ("You win with "+ this.pHand.val +" to " + this.dHand.val + "! Payout: $" + payout);
+      return
     }
-    if (pScore < dScore || pScore > 21){
-      this.pot = 0;
-      return ("Dealer wins!");
+    if(this.pHand.val < this.dHand.val){
+      this.textOut = ("Dealer wins with " + this.dHand.val + " to " + this.pHand.val +"!");
+      return
+    }
+    if (this.pHand.val === this.dHand.val){
+      this.bank += (this.pot / 2);
+      this.textOut = "Push";
+      return;
     }
   },
 
