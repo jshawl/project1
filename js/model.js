@@ -49,7 +49,7 @@ BlackJack.prototype = {
   settle: function(){
     this.handOver = true; //maybe farther down
 
-    // var pScore = this.pHand.val;
+    // var pScore = this.pHand.val; // please remove commented out code before submitting in the future.
     // var dScore = this.dHand.val;
     if(this.checkBust(this.pHand)){
       this.textOut = "Dealer wins!";
@@ -106,3 +106,5 @@ BlackJack.prototype = {
   }
 
 }
+
+// EXCELLENT model for your game!! Seriously where did you learn to do this?

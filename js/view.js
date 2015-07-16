@@ -1,5 +1,5 @@
 function BlackJackView(model){
-  this.model = model;
+  this.model = model; //yes! :thumbsup:
   this.init();
 }
 
@@ -58,6 +58,7 @@ BlackJackView.prototype = {
     this.model.deal = false;
     this.update();
     this.dealCard(this.model.pHand);
+    // can you think of a way to have an arbitrary amount of players in this game?
     this.dealCard(this.model.dHand);
     this.dealCard(this.model.pHand);
     this.dealCard(this.model.dHand, true)
@@ -85,7 +86,7 @@ BlackJackView.prototype = {
   },
   dealCard: function(to, hide){
     var card = this.cardString(this.model.drawCard(to));
-    var hand = (to == this.model.dHand ? ".dealer" : ".player")
+    var hand = (to == this.model.dHand ? ".dealer" : ".player") // nice use of ternary!
     this.printCard(card, hand, hide);
   },
   printCard: function(card, hand, hide){
@@ -109,3 +110,7 @@ BlackJackView.prototype = {
     return number + suits[suit];
   }
 }
+
+// John I am *very* impressed with your code. I would encourage you to think of ways that you can have any number of players.
+// Also, I recommend making the winner / loser more visually prominent and possibly add a message for when the user doesn't have
+// enough money to keep playing. Awesome job on project 1!!!

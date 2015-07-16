@@ -25,7 +25,7 @@ h3{
   border-radius: 20px;
 }
 .console{
-  display: flex;
+  display: flex; /* Awesome use of flexbox!! */
 }
 .console *{
   display: inline-block;
@@ -97,3 +97,4 @@ button {
 .hide{
   color: white;
 }
+/* nice helper classes! */
